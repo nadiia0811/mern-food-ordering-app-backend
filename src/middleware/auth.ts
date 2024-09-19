@@ -42,6 +42,5 @@ export const jwtCheck = auth({
      next();
    } catch (error) {
     return res.sendStatus(401);
-   } 
-     
+   }   
   }

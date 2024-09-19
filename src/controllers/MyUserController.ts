@@ -65,6 +65,4 @@ const getCurrentUser = async (req: Request, res: Response) => {
  }
 }
 
-
-
 export default { createCurrentUser, updateCurrentUser, getCurrentUser };
