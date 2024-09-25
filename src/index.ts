@@ -12,7 +12,19 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
         
 const app = express();
 app.use(express.json());
-app.use(cors());
+//app.use(cors());
+
+const allowedOrigins = ["https://mern-food-ordering-app-frontend-c7fh.onrender.com", 
+                        "http://localhost:5173"];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true 
+}));
+
+
+
 
 app.get("/health", async (req: Request, res: Response) => {
         res.send({message: "Health OK!"});
