@@ -19,6 +19,7 @@ const createMyRestaurant = async (req: Request, res: Response) => {
     const dataURI = `data:${image.mimetype};base64,${base64Image}`;
 
     const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+    console.log(uploadResponse);
    
     const restaurant = new Restaurant(req.body);
     restaurant.imageUrl = uploadResponse.url;
@@ -30,7 +31,6 @@ const createMyRestaurant = async (req: Request, res: Response) => {
     res.status(201).send(restaurant);
 
   } catch (error) {
-    console.log(error)
     res.status(500).json({message: "An error occurred while creating the restaurant" });
   }
 }
