@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
@@ -31,5 +31,12 @@ cloudinary.config({
 app.listen(7000, () => {
 console.log("Server is running on port 7000")
 });
+
+//errors logging
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+        console.error(err.stack);
+        res.status(500).json({ message: 'Internal Server Error' });
+    });
+    
 
 
