@@ -3,52 +3,61 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import myUserRoute from "./routs/MyUserRoute";
-import {v2 as cloudinary} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoute from "./routs/MyRestaurantRoute";
 
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
-        .then(() => console.log("Connected to db"))
-        
+  .then(() => console.log("Connected to db"))
+  .catch((error) => console.error("Failed to connect to db", error));
+
 const app = express();
 app.use(express.json());
-//app.use(cors());
 
-const allowedOrigins = ["https://mern-food-ordering-app-frontend-c7fh.onrender.com", 
-                        "http://localhost:5173"];
+
+const allowedOrigins = [
+  "https://mern-food-ordering-app-frontend-c7fh.onrender.com", 
+  "http://localhost:5173"
+];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+ 
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true 
+  credentials: true  
 }));
 
 
-
-
 app.get("/health", async (req: Request, res: Response) => {
-        res.send({message: "Health OK!"});
+  res.send({ message: "Health OK!" });
 });
+
 
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
 
 
 cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET
-      })
-      
-app.listen(7000, () => {
-console.log("Server is running on port 7000")
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-//errors logging
+
+app.listen(7000, () => {
+  console.log("Server is running on port 7000");
+});
+
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-        console.error(err.stack);
-        res.status(500).json({ message: 'Internal Server Error' });
-    });
-    
-
-
+  console.error("Error:", err.stack);
+  res.status(500).json({ message: 'Internal Server Error' });
+});
