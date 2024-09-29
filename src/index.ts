@@ -22,17 +22,17 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
- 
     if (!origin) return callback(null, true);
-    
+
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true  
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],  
+  credentials: true,  
+  allowedHeaders: ['Content-Type', 'Authorization'],  
 }));
 
 
@@ -57,7 +57,7 @@ app.listen(7000, () => {
 });
 
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   console.error("Error:", err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
