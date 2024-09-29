@@ -57,7 +57,7 @@ app.listen(7000, () => {
 });
 
 
-app.use((err: Error, req: Request, res: Response) => {
-  console.error("Error:", err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  //console.error("Error:", err.stack);
+   res.status(500).json({ message: 'Internal Server Error' });
 });
