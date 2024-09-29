@@ -6,6 +6,8 @@ import myUserRoute from "./routs/MyUserRoute";
 import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoute from "./routs/MyRestaurantRoute";
 
+const morgan = require("morgan");
+
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
   .then(() => console.log("Connected to db"))
@@ -13,6 +15,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
 
 const app = express();
 app.use(express.json());
+app.use(morgan("combined"));
 
 const corsOptions = {
   origin:  ["https://mern-food-ordering-app-frontend-c7fh.onrender.com",  
