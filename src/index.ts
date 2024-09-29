@@ -20,10 +20,9 @@ const allowedOrigins = [
   "http://localhost:5173"
 ];
 
-app.use(cors({
+app.options('*', cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -35,11 +34,11 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],  
 }));
 
+app.options('*', cors());
 
 app.get("/health", async (req: Request, res: Response) => {
   res.send({ message: "Health OK!" });
 });
-
 
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
@@ -56,11 +55,7 @@ app.listen(7000, () => {
   console.log("Server is running on port 7000");
 });
 
-
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
    console.error("Error:", err.stack);
-   console.error("Request Method:", req.method);
-   console.error("Request URL:", req.originalUrl);
-   console.error("Request Body:", req.body);
    res.status(500).json({ message: 'Internal Server Error' });
 });
