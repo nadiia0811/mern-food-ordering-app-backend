@@ -58,6 +58,9 @@ app.listen(7000, () => {
 
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  //console.error("Error:", err.stack);
+   console.error("Error:", err.stack);
+   console.error("Request Method:", req.method);
+   console.error("Request URL:", req.originalUrl);
+   console.error("Request Body:", req.body);
    res.status(500).json({ message: 'Internal Server Error' });
 });
