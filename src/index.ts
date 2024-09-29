@@ -22,6 +22,8 @@ const corsOptions = {
            "http://localhost:5173"] 
 };
 app.use(cors(corsOptions));
+app.options("/api/my/restaurant", cors(corsOptions));
+
 
 app.get("/health", async (req: Request, res: Response) => {
   res.send({ message: "Health OK!" });
