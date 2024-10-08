@@ -8,7 +8,6 @@ import myRestaurantRoute from "./routs/MyRestaurantRoute";
 
 const morgan = require("morgan");
 
-
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
   .then(() => console.log("Connected to db"))
   .catch((error) => console.error("Failed to connect to db", error));
@@ -20,17 +19,16 @@ app.use(morgan("combined"));
 const corsOptions = {
   origin:  ["https://mern-food-ordering-app-frontend-c7fh.onrender.com",  
            "http://localhost:5173"] 
-};
-app.use(cors(corsOptions));
-app.options("/api/my/restaurant", cors(corsOptions));
+}; 
+app.use(cors(corsOptions)); 
+app.options("/api/my/restaurant", cors(corsOptions));   
 
-
-app.get("/health", async (req: Request, res: Response) => {
+ app.get("/health", async (req: Request, res: Response) => {
   res.send({ message: "Health OK!" });
-});
+}); 
 
-app.use("/api/my/user", myUserRoute);
-app.use("/api/my/restaurant", myRestaurantRoute);
+app.use("/api/my/user", myUserRoute); 
+app.use("/api/my/restaurant", myRestaurantRoute); 
 
 
 cloudinary.config({
@@ -45,6 +43,8 @@ app.listen(7000, () => {
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-   console.error("Error:", err.stack);
-   res.status(500).json({ message: 'Internal Server Error' });
-});
+console.error("in the app.use(error, req, res method");
+if(err){
+return res.statusCode;
+}  
+}); 
