@@ -16,13 +16,8 @@ import mongoose from "mongoose";
     if (!image) {
       return res.status(400).json({ message: "No image file provided" });
     }
-  /*const base64Image = Buffer.from(image.buffer).toString("base64");
-    const dataURI = `data:${image.mimetype};base64,${base64Image}`;
-    const uploadResponse = await cloudinary.v2.uploader.upload(dataURI); */
    
     const restaurant = new Restaurant(req.body);
-    /*restaurant.imageUrl = uploadResponse.url;*/
-    //const imageUrl = await uploadImage(req.file as Express.Multer.File);
     const imageUrl = await uploadImage(image);
     restaurant.imageUrl = imageUrl;
     restaurant.user = new mongoose.Types.ObjectId(req.userId);
@@ -51,7 +46,7 @@ const getMyRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-const updateMyRestaurant = async (req: Request, res: Response) => { //here is an error
+const updateMyRestaurant = async (req: Request, res: Response) => { 
   try {
     const restaurant = await Restaurant.findOne({user: req.userId}); 
     console.log(restaurant)
