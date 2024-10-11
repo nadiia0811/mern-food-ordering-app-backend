@@ -5,6 +5,7 @@ import "dotenv/config";
 import myUserRoute from "./routs/MyUserRoute";
 import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoute from "./routs/MyRestaurantRoute";
+import restaurantRoute from "./routs/RestaurantRoute";
 
 const morgan = require("morgan");
 
@@ -29,6 +30,7 @@ app.options("/api/my/restaurant", cors(corsOptions));
 
 app.use("/api/my/user", myUserRoute); 
 app.use("/api/my/restaurant", myRestaurantRoute); 
+app.use("/api/restaurant", restaurantRoute);
 
 
 cloudinary.config({
