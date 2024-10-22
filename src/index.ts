@@ -6,6 +6,7 @@ import myUserRoute from "./routs/MyUserRoute";
 import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoute from "./routs/MyRestaurantRoute";
 import restaurantRoute from "./routs/RestaurantRoute";
+import orderRoute from "./routs/OrderRoute";
 
 const morgan = require("morgan");
 
@@ -31,6 +32,7 @@ app.options("/api/my/restaurant", cors(corsOptions));
 app.use("/api/my/user", myUserRoute); 
 app.use("/api/my/restaurant", myRestaurantRoute); 
 app.use("/api/restaurant", restaurantRoute);
+app.use("/api/order", orderRoute);
 
 
 cloudinary.config({
@@ -47,6 +49,6 @@ app.listen(7000, () => {
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 console.error("in the app.use(error, req, res method");
 if(err){
-return res.statusCode;
+  return res.statusCode;
 }  
 }); 
