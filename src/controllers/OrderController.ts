@@ -25,7 +25,7 @@ type CheckoutSessionRequest = {
 
 
 const stripeWebhookHandler = async (req: Request, res: Response) => {
-  //Your webhook signing secret is whsec_4f487e62babc6d60197236ff274fff117f4188218da2349e0fd1533b5741bf87
+  
   let event;
   try {
     const sig = req.headers["stripe-signature"];
