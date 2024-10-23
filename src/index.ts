@@ -15,6 +15,9 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
   .catch((error) => console.error("Failed to connect to db", error));
 
 const app = express();
+
+app.use("/api/order/checkout/webhook", express.raw({type: "*/*"}));
+
 app.use(express.json());
 app.use(morgan("combined"));
 
@@ -33,6 +36,7 @@ app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute); 
 app.use("/api/restaurant", restaurantRoute);
 app.use("/api/order", orderRoute);
+
 
 
 cloudinary.config({
