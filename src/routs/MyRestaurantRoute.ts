@@ -23,6 +23,7 @@ router.post("/",
            MyRestaurantController.createMyRestaurant           
         );
 
+router.get("/order", jwtCheck, jwtParse, MyRestaurantController.getMyRestaurantOrders);
 router.get("/", jwtCheck, jwtParse, MyRestaurantController.getMyRestaurant);
 router.put("/", 
            upload.single("imageFile"),
@@ -30,5 +31,7 @@ router.put("/",
            jwtCheck, 
            jwtParse, 
            MyRestaurantController.updateMyRestaurant);
+
+router.patch("/order/:orderId/status", jwtCheck, jwtParse, MyRestaurantController.updateOrderStatus);
 
 export default router;

@@ -3,6 +3,9 @@ import { jwtCheck, jwtParse } from "../middleware/auth";
 import OrderController from "../controllers/OrderController";
 
 const route = express.Router();
+
+route.get("/", jwtParse, jwtCheck, OrderController.getMyOrders);
+
 route.post("/checkout/create-checkout-session",
            jwtCheck, 
            jwtParse,
